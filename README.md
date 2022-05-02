@@ -1,2 +1,2 @@
 # free_market_gdtt
-Projeto de qualidade de vida no trabalho
+Aplicativo feito para projeto sobre qualidade de vida no trabalho.
