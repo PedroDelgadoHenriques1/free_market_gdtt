@@ -1,11 +1,21 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import itertools
 
+iter_id = itertools.count()
+
+# print("Hoje é ", datetime.today())
+
+enterprises = []
+devs = []
+ads = []
+projects = []
+
 class Empresa:
-	iter_id = itertools.count()
+	enterprises = []
+	iteration = iter_id
 
 	def __init__(self, enterprise, cnpj, user, password, address):
-		self.id = next(self.iter_id)
+		self.id = next(self.iteration)
 		self.enterprise = enterprise
 		self.cnpj = cnpj
 		self.user = user
@@ -17,85 +27,134 @@ class Empresa:
 		self.projetos = 0
 
 	def __str__(self):
-		return self.enterprise	
+		return self.enterprise
+	
+	def add_anuncio(self, descricao, valor, prazo_final):
+		Anuncio.__init__(Anuncio, self.id, descricao, valor, prazo_final)
+		print("ID de anúncio: ", Anuncio.id, "\n Descrição: ", Anuncio.descricao,"\n valor: R$", Anuncio.valor, "\n Prazo final: ", Anuncio.prazo_final) 
+		return Anuncio
+		
+	def enviar_mensagem():
+		pass
+		self.anuncios += 1
+		print("Número de anúncios atual: ", self.anuncios)
+		return self.anuncios
 
+	def modify_address(self, new_address):
+		self.address = new_address
+		return
+	def print_empresa(self):
+		print(
+			"ID: ", self.id, 
+			"\n Razão Social: ", self.enterprise, 
+			"\n CNPJ: ", self.cnpj, 
+			"\núltima alteração: ",  self.data_alteracao
+		)
+		
+	def add_enterprise(e):
+		if isinstance(e, Empresa):
+			enterprises.append(e)
+		else:
+			print("operação inválida")
+	
 class Desenvolvedor:
-	iter_id = itertools.count()
+	iteration = iter_id
 
-	def __init__(self, name, cpf, user, password, skills):
-	  	self.id = next(Desenvolvedor.iter_id)
+	def __init__(self, name, cpf, user, password):
+	  	self.id = next(Desenvolvedor.iteration)
 	  	self.name = name
 	  	self.cpf = cpf
 	  	self.user = user
 	  	self.password = password
-	  	self.skills = skills
 	  	self.level = 1
-	  	self.insigneas = "new member"
-	  	self.projetos = 0
-
+	  	self.insigneas = ["new member"]
+	  	self.projetos = []
+	  	self.skills = []
+	  	self.data_criacao = datetime.now()
+	  	self.data_alteracao = datetime.now()
+	
+	
 	def __str__(self):
 		return self.name	
 
 	def level_up(self):
 		return 
+	def new_insignea():
+		return
+	
+	def modify_address(self, new_address):
+		self.address = new_address
+		return
+	
+	def new_project(self,  Empresa, Anuncio):
+		Projeto.__init__(Projeto, Anuncio) #(self, Anuncio)
+		return
+	def todos_anuncios():
+		pass
+	def visualizar_anuncio(Anuncio):
+		pass
+	def enviar_mensagem():
+		pass 
+	
+	def get_projetos(self):
+		return self.projects
+	
+	class Portfolio():
+		def __init__(self, name, cpf, user, descricao, curriculum):
+			self.descricao = descricao
+			self.curriculum = curriculum		
 
-class Portfolio(Desenvolvedor):
-	def __init__(self, id, name, cpf, user, password, email, skills, level, insigneas, descricao, curriculum):
-		self.descricao = descricao
-		self.curriculum = curriculum
-		
-		#constructor classe pai
-		Desenvolvedor.__init__(self) 
+class Anuncio:
+	iteration = iter_id
 
-class Projeto:
-	iter_id = itertools.count()
-
-	def __init__(self, id, empresa_id, descricao, valor, prazo, data_criacao, data_alteracao):
-		self.id = id
-		self.empresa_id = empresa_id
+	def __init__(self, Empresa, descricao, valor, prazo_final):
+		self.id = next(Anuncio.iteration)
+		self.Empresa = Empresa
 		self.descricao = descricao
 		self.valor = valor
-		self.prazo = prazo
-		self.data_criacao = data_criacao
-		self.data_alteracao = data_alteracao
-		
+		self.data_criacao =  datetime.now()
+		self.data_alteracao = datetime.now()
+		self.prazo = self.data_criacao + timedelta(days=60)
+		prazo_final = timedelta(days = 60)
+		self.prazo_final = datetime.today() + prazo_final
+	
+	def delete_anuncio ():
+		delete
 
-class Contrato(Projeto):
-	def __init__(self, id, empresa_id, descricao, valor, prazo, data_criacao, data_alteracao, prox_entrega, status):
-		self.prox_entrega = prox_entrega
-		self.status = status
+class Projeto(Anuncio):
+	iteration = iter_id
+	
+	def __init__(self, Anuncio):
+		self.id = next(Projeto.iteration)
+		empresa_id = Anuncio.id
+		self.valor = Anuncio.valor
+		self.prazo = Anuncio.prazo_final
+		self.status = "new"
+		self.data_criacao =  datetime.now()
+		self.data_alteracao = datetime.now()
+		self.prox_entrega = self.data_criacao.day + 30
 		
 		#constructor classe pai
-		Projeto.__init__(self)
+		Anuncio.__init__(Empresa, Anuncio.descricao, Anuncio.valor, Anuncio.prazo_final)
+		
 		
 class Chat:
-	iter_id = itertools.count()
 
-	def __init__(self, empresa_id, desenvolvedor_id, mensagens, data_envio, projeto):
+	def __init__(self, Empresa, Desenvolvedor, mensagens, data_envio, Anuncio):
+		self.id = [Empresa.id, Desenvolvedor.id]
 		self.empresa_id= empresa_id
 		self.desenvolvedor_id = desenvolvedor_id
 		self.mensagens = mensagens
 		self.data_envio = data_envio
-		self.projeto = projeto
-
-e1 = Empresa( 
-		"Coca-Cola",
-		"31643708000194", 
-		"alvo@domail.com",
-		'asdas221\#', #probably not the password
-		"Rua do mel, 123"	
-	)
-
-d1 = Desenvolvedor(
-		"john",
-		84446724169,
-		"dullboy@harvard.com",
-		'asdas221\#', #probably not the password		 
-  		["chess", "catan"]
-	)
-
-print(e1.enterprise + " is at " + e1.address)  	
-print(d1.name + " could never " + d1.skills[0]) 
+		self.Anuncio = Anuncio
+		self.data_criacao =  datetime.now()
+		self.data_alteracao = datetime.now()
+		
+	def new_message():
+		return
+		
+	def close_chat():
+		return
 
 
 
