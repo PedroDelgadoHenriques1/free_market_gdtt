@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+
 import itertools
 
 iter_id = itertools.count()
@@ -7,15 +8,18 @@ iter_id = itertools.count()
 
 enterprises = []
 devs = []
-ads = []
 projects = []
 
 class Empresa:
-	enterprises = []
+
+	ads = []
+	
 	iteration = iter_id
 
 	def __init__(self, enterprise, cnpj, user, password, address):
 		self.id = next(self.iteration)
+		self.direita_id = self.id + 1
+		self.esquerda_id = self.id - 1
 		self.enterprise = enterprise
 		self.cnpj = cnpj
 		self.user = user

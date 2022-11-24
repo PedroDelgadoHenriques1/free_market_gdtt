@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from srch import *
 from tests import *
 
 app = FastAPI()
@@ -6,26 +7,36 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Página Inicial"}
     
-@app.get("{dev_id}/projects/{id}")
+@app.get("/{dev_id}/projects/{id}")
 def show_projects(id: int):
 	try:
 		return {"projects": devs[id].projetos}
 	except:
 		return "endpoint não encontrado"
 	
-@app.get("ads/all")
+@app.get("/ads/all")
 def show_ads():
-	return {"ads": ads}
+	return {"ads": Empresa.ads}
 	
-@app.get("{enterprise_id}/ads")
+@app.get("/display")
+def busca_empresa():
+	print("Termo da busca é x:")
+	new = busca_empresa_rec(e1, 1)
+	return {"new": new}
+	
+@app.get("/{enterprise_id}/ads")
 def enterprise_ads(enterprise_id: int):
-	return {"ads": ads} #all ads of enterprise X
+	retorno = None
+	for empresa in enterprises:
+		if enterprise_id == empresa.id:
+			retorno = empresa.ads
+	return {"ads": retorno} #all ads of enterprise X
 
-@app.get("{enterprise_id}/ads/{ad_id}")
+@app.get("/{enterprise_id}/ads/{ad_id}")
 def find_ad(enterprise_id: int, ad_id: int):
-	return {"ads": ads} #one ad of one enterprise
+	return {"ads": Empresa.ads} #one ad of one enterprise
 	
 @app.get("/devs")
 def show_devs():
